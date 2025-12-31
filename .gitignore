@@ -1,8 +1,14 @@
-env/
+# Windows
+desktop.ini
+
+# Python
 __pycache__/
 *.pyc
+
+# Django
+env/
 db.sqlite3
-.env
+
+# IDE
 .vscode/
 .idea/
-
