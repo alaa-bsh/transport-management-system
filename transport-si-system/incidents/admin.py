@@ -3,6 +3,6 @@ from .models import Incident
 
 @admin.register(Incident)
 class IncidentAdmin(admin.ModelAdmin):
-    list_display = ('type_incident', 'date_incident', 'resolu')
-    list_filter = ('type_incident', 'resolu')
+    list_display = ('incident_type', 'tour', 'resolved', 'date_reported')
+    list_filter = ('incident_type', 'resolved')
     search_fields = ('description',)
