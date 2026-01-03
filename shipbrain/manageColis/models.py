@@ -6,7 +6,7 @@ class Colis (models.Model) :
     poids = models.FloatField(max_length=10)
     volume = models.FloatField(max_length=10)
     description = models.CharField(max_length=100)
-    expedition = models.ForeignKey('manageExpedition.Expedition', on_delete=models.CASCADE)
+    id_exp = models.ForeignKey('manageExpedition.Expedition', max_length=10 , on_delete=models.CASCADE , default='JHY-52')
 
     def __str__(self):
-        return self.description
+        return self.description + '-' + self.id_exp

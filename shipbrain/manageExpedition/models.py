@@ -41,6 +41,7 @@ class Expedition(models.Model) :
         ('livr','livré'),
         ('echec','echec de livraison'),
     ]
+    id_Exp = models.CharField(max_length=10 , primary_key=True , default="JHY-52")
     #id_client = models.ForeignKey(Client, on_delete=models.CASCADE)
     #id_service = models.ForeignKey(typeService , on_delete=models.CASCADE)
     statut = models.CharField( max_length=20 ,choices=STATUT )
@@ -61,7 +62,7 @@ class Expedition(models.Model) :
         return tarifBase + prixPoidsTot + prixVolTot
 
     def __str__(self):
-        return self.statut
+        return self.statut + '-' + self.id_Exp
 
 
 
