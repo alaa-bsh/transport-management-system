@@ -1,30 +1,30 @@
 from django.db import models
 
-class Driver(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    license_number = models.CharField(max_length=50, unique=True)
-    phone = models.CharField(max_length=20)
-    available = models.BooleanField(default=True)
+class Chauffeur(models.Model):
+    nom = models.CharField(max_length=100)
+    prenom = models.CharField(max_length=100)
+    numPermis = models.CharField(max_length=50, unique=True)
+    Tel = models.CharField(max_length=20)
+    Email = models.EmailField(unique=True)
+    Disponibilite = models.BooleanField(default=True)
+    Adress = models.TextField()
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return self.nom + '-'+ self.prenom
 
 
-class Vehicle(models.Model):
-    plate_number = models.CharField(max_length=20, unique=True)
-    vehicle_type = models.CharField(max_length=50)
-    capacity = models.FloatField(help_text="Capacity in kg")
-    consumption = models.FloatField(help_text="Fuel consumption per 100km")
-    status = models.CharField(
-        max_length=50,
-        choices=[
-            ('available', 'Available'),
-            ('maintenance', 'Maintenance'),
-            ('on_route', 'On Route'),
-        ],
-        default='available'
-    )
+class Vehicule(models.Model):
+    ETAT = [
+            ('Dispo', 'Disponible'),
+            ('maint', 'Maintenance'),
+            ('onRoute', 'On Route'),
+        ]
+    numImmat = models.CharField(max_length=20, unique=True)
+    type_vehicule = models.CharField(max_length=50)
+    capacitePoids = models.FloatField()
+    capaciteVolume = models.FloatField()
+    consommationCarburant = models.FloatField()
+    etat = models.CharField(max_length=50,choices = ETAT, default='available')
 
     def __str__(self):
-        return self.plate_number
+        return self.numImmat

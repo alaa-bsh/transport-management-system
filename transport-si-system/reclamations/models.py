@@ -1,54 +1,25 @@
 from django.db import models
 from clients.models import Client
 from incidents.models import Incident
+from manageExpedition.models import Expedition
+from manageExpedition.models import Facture
+
+
 
 class Reclamation(models.Model):
-
-    STATUT_CHOICES = [
+    STATUT = [
         ('en_cours', 'En cours'),
         ('resolue', 'Résolue'),
         ('annulee', 'Annulée'),
     ]
-
-    client = models.ForeignKey(
-        Client,
-        on_delete=models.CASCADE,
-        related_name='reclamations'
-    )
-
-    incident = models.ForeignKey(
-        Incident,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='reclamations'
-    )
-
-    # 👇 FUTURE LINKS (SAFE)
-    expedition = models.ForeignKey(
-        'expeditions.Expedition',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='reclamations'
-    )
-
-    facture = models.ForeignKey(
-        'facturation.Facture',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='reclamations'
-    )
-
+    client = models.ForeignKey(Client,on_delete=models.CASCADE,related_name='reclamations')
+    incident = models.ForeignKey(Incident,on_delete=models.SET_NULL,related_name='reclamations',null=True)
+    expedition = models.ForeignKey(Expedition,on_delete=models.SET_NULL,related_name='reclamations',null=True)
+    facture = models.ForeignKey(Facture,on_delete=models.SET_NULL,related_name='reclamations',null=True)
     objet = models.CharField(max_length=200)
     description = models.TextField()
     date_reclamation = models.DateTimeField(auto_now_add=True)
-    statut = models.CharField(
-        max_length=20,
-        choices=STATUT_CHOICES,
-        default='en_cours'
-    )
+    statut = models.CharField(max_length=20,choices=STATUT,default='en_cours')
 
     def __str__(self):
-        return f"Réclamation #{self.id} - {self.client.nom}"
+        return f"#{self.id} - {self.client.nom}"

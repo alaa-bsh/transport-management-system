@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'clients',
     'incidents',
     'logistics',
-    'tours', 
+    'manageExpedition',
+    'manageColis',
+    'manageDestination',
+    'reclamations'
 ]
 
 MIDDLEWARE = [

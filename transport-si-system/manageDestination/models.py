@@ -9,4 +9,4 @@ class Destination (models.Model) :
     tarifBase = models.FloatField(max_length=10)
 
     def __str__(self):
-        return self.ville + " - " + self.pays + " - " + self.zoneGeo
+        return self.ville + " - " + self.pays 

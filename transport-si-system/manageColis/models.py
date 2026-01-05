@@ -9,4 +9,4 @@ class Colis (models.Model) :
     id_exp = models.ForeignKey('manageExpedition.Expedition', max_length=10 , on_delete=models.CASCADE , default='JHY-52')
 
     def __str__(self):
-        return self.description + '-' + self.id_exp
+        return f"#{self.id}"
