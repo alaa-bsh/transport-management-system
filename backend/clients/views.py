@@ -1,20 +1,23 @@
 import json
 from django.http import JsonResponse
 from django.shortcuts import render
-from .models import Product , Client
-
-def afficher_produits(request):
-    produits = Product.objects.all() 
-    return render(request, 'pages/test.html', {"products": produits})
-
-def favoris_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/favoris.html', {"products": produits})
+from .models import Client
 
 def client_view(request):
     clients = Client.objects.all()
-    return render(request, 'pages/tables/client.html', {"clients": clients}) 
-
+    data = [
+        {
+            "id": c.id,
+            "nom": c.nom,
+            "prenom": c.prenom,
+            "email": c.email,
+            "telephone": c.telephone,
+            "solde": float(c.solde),
+            "date_creation": c.date_creation.strftime("%Y-%m-%d %H:%M"),
+        }
+        for c in clients
+    ]
+    return render(request, 'pages/tables/client.html', {"clients": clients})
 
 def client_id_view(request, client_id):
     try:
@@ -31,8 +34,7 @@ def client_id_view(request, client_id):
         return JsonResponse(data)
     except Client.DoesNotExist:
         return JsonResponse({"error": "Client not found"}, status=404)
-
-
+    
 def update_client(request, client_id):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -81,52 +83,3 @@ def create_client(request):
         })
 
     return JsonResponse({"error": "Invalid request"}, status=400)
-
-
-def chauffeur_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/tables/chauffeur.html', {"products": produits})
-
-def vehicule_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/tables/vehicule.html', {"products": produits})
-
-def destination_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/tables/destination.html', {"products": produits})
-
-def type_service_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/tables/type_service.html', {"products": produits})
-
-def tarification_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/tables/tarification.html', {"products": produits})
-
-def expedition_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/expedition.html', {"products": produits})
-
-def tournee_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/expedition.html', {"products": produits , "page_name": "Tournee"})
-
-def facturation_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/facturation.html', {"products": produits})
-
-def paiement_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/paiement.html', {"products": produits})
-
-def incident_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/incident.html', {"products": produits})
-
-def reclamation_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/reclamation.html', {"products": produits})
-
-def dashboard_view(request):
-    produits = Product.objects.all()
-    return render(request, 'pages/dashboard.html', {"products": produits})
