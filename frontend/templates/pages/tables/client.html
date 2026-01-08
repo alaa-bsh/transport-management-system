@@ -24,7 +24,6 @@
                         <th scope="col">Num Telephone</th>
                         <th scope="col">Email</th>
                         <th scope="col">Solde Eventuel</th>
-                        <th scope="col">Date Création</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +38,6 @@
                         <td>{{ client.telephone }}</td>
                         <td>{{ client.email }}</td>
                         <td>{{ client.solde }}</td>
-                        <td>{{ client.date_creation|date:"Y-m-d H:i" }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

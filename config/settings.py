@@ -37,7 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'frontend_test',
+    'backend.clients',
+    'backend.incidents',
+    'backend.logistics',
+    'backend.manageColis',
+    'backend.manageExpedition',
+    'backend.manageDestination',
+    'backend.reclamations',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +126,5 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'frontend' / 'static',
 ]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

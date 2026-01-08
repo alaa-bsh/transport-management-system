@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const deleteBtn = document.getElementById("deleteBtn");
   const savebutton = document.getElementById("savebtn");
 
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  const checkboxes = document.querySelectorAll('.row-checkbox');
   
   // Initialize modal once
   const infoModalEl = document.getElementById("infoModal");
@@ -40,16 +40,16 @@ document.addEventListener("DOMContentLoaded", () => {
     "",
     `/clients/${clientId}/edit/`
   );
-}
+  }
 
-function openViewModal(clientId) {
-  infoModal.show();
-  history.pushState(
-    { modal: "view", clientId },
-    "",
-    `/clients/${clientId}/`
-  );
-}
+  function openViewModal(clientId) {
+    infoModal.show();
+    history.pushState(
+      { modal: "view", clientId },
+      "",
+      `/clients/${clientId}/`
+    );
+  }
 
   checkboxes.forEach(cb => cb.addEventListener("change", updateActionBar));
 
@@ -139,7 +139,7 @@ function openViewModal(clientId) {
     "",
     `/clients/create`
   );
-}
+  }
 
 
   addBtn.addEventListener("click", async () => {
@@ -177,8 +177,7 @@ function openViewModal(clientId) {
       } catch (err) {
         console.error(err);
       }
-    }
-  });
+    });
 
 
   savebutton.addEventListener("click", async () => {
@@ -233,4 +232,5 @@ function openViewModal(clientId) {
     modalBody.innerHTML = "";
     history.pushState({}, "", "/clients/");
   });
-});
+
+})

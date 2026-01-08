@@ -19,5 +19,17 @@ from django.urls import path , include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('frontend_test.urls'))
+    path('clients/', include('backend.clients.urls'), name='clients'),
+    # path("chauffeur/", include('backend.logistics.urls')),
+    # path("vehicule/", include('backend.logistics.urls')),
+    path("destination/", include('backend.manageDestination.urls')),
+    # path("type_service/", views.type_service_view, name="type_service"),
+    # path colis
+    # path("tarification/", views.tarification_view, name="tarification"),
+    path("expedition/", include('backend.manageExpedition.urls')),
+    path("tournee/", include('backend.manageExpedition.urls')),
+    path("facturation/", include('backend.manageExpedition.urls')),
+    # path("paiement/", views.facturation_view, name="paiement"),
+    # path("incident/", views.incident_view, name="incident"),
+    # path("reclamation/", include('backend.reclamations.urls')),
 ]

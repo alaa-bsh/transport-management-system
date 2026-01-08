@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class FrontendTestConfig(AppConfig):
+class LogisticsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'frontend_test'
+    name = 'backend.logistics'
