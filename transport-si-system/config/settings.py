@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'historique.apps.HistoriqueConfig',
     'clients',
     'incidents',
     'logistics',
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
     'manageDestination',
     'reclamations',
     'typeservice',
-    'historique', 
+   
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
