@@ -10,24 +10,24 @@ from logistics.models import Vehicule
 
 
 
-class Tournée(models.Model) : 
-    dateTourne = models.DateField()
-    id_chauff = models.ForeignKey(Chauffeur , on_delete=models.SET_NULL , null=True)
-    id_vehicule = models.ForeignKey(Vehicule , on_delete=models.SET_NULL, null=True)
-    numBureau = models.ManyToManyField(Destination , related_name="Tournee")
+class Tournee(models.Model) : 
+    date_tournee = models.DateField()
+    chauffeur = models.ForeignKey(Chauffeur , on_delete=models.SET_NULL , null=True)
+    vehicule = models.ForeignKey(Vehicule , on_delete=models.SET_NULL, null=True)
+    destinations = models.ManyToManyField(Destination , related_name="Tournee")
 
     def __str__(self):
         return f"Tournee #{self.id}"
 
 
 class Facture (models.Model) :
-    id_client = models.OneToOneField(Client , on_delete=models.CASCADE)
+    client = models.ForeignKey( Client,on_delete=models.CASCADE,related_name="factures",  null=True,blank=True)
     date_fact = models.DateField(auto_now=True)
     #reclamation = models.OneToOneField(Reclamation , on_delete=models.CASCADE)
 
     @property
     def montant_HT(self):
-       exps = Expedition.objects.filter(id_client=self.id_client)
+       exps = self.client.expeditions.all()
        montant_HT= 0 
        for e in exps :
            montant_exp = e.montant_total 
@@ -49,13 +49,13 @@ class Expedition(models.Model) :
         ('echec','echec de livraison'),
     ]
     id_Exp = models.CharField(max_length=10 , primary_key=True , default="JHY-52")
-    id_client = models.ForeignKey(Client, on_delete=models.CASCADE, default=0)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE  ,null=True,blank=True)
     #id_service = models.ForeignKey(typeService , on_delete=models.CASCADE)
     statut = models.CharField( max_length=20 ,choices=STATUT )
     date_exped = models.DateTimeField(auto_now=True)
     #tarification = models.ForeignKey(Tarification , on_delete=models.CASCADE)
     numBureau = models.ForeignKey(Destination , on_delete=models.CASCADE)
-    id_tournée = models.ForeignKey(Tournée, on_delete=models.SET_NULL,null=True)
+    tournee = models.ForeignKey(Tournee,on_delete=models.SET_NULL,null=True,blank=True,related_name="expeditions")
     @property
     def montant_total(self):
         tarifBase = self.numBureau.tarifBase

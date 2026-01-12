@@ -1,5 +1,5 @@
 from django.db import models
-from manageExpedition.models import Tournée
+from manageExpedition.models import Tournee
 
 class Incident(models.Model):
     TYPE_INCIDENTS = [
@@ -10,7 +10,7 @@ class Incident(models.Model):
         ('autre', 'Autre'),
     ]
     incident_type = models.CharField(max_length=50,choices=TYPE_INCIDENTS)
-    tour = models.ForeignKey(Tournée,on_delete=models.SET_NULL,null=True,related_name='incidents')
+    tour = models.ForeignKey(Tournee,on_delete=models.SET_NULL,null=True,related_name='incidents')
     description = models.TextField()
     date_reported = models.DateTimeField(auto_now_add=True)
     resolu = models.BooleanField(default=False)

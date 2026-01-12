@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'manageExpedition',
     'manageColis',
     'manageDestination',
-    'reclamations'
+    'reclamations',
+    'typeservice',
+    'historique', 
 ]
 
 MIDDLEWARE = [
