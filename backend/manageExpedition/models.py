@@ -36,20 +36,19 @@ class Facture (models.Model) :
 
 class Expedition(models.Model) :
     STATUT = [
-        ('trsit','en transit'),
-        ('centri','en centre de tri'),
-        ('encourslivr','en cours de livraison '),
+        ('trsit','transit'),
+        ('centri','en tri'),
+        ('encourslivr','en cours '),
         ('livr','livré'),
-        ('echec','echec de livraison'),
+        ('echec','echec'),
     ]
-    id_Exp = models.CharField(max_length=10 , primary_key=True , default="JHY-52")
-    id_client = models.ForeignKey('clients.Client', on_delete=models.CASCADE, default=0)
-    #id_service = models.ForeignKey(TypeService , on_delete=models.CASCADE)
+    id_client = models.ForeignKey('clients.Client', on_delete=models.CASCADE)
+    service = models.ForeignKey(TypeService , on_delete=models.CASCADE , null=True)
     statut = models.CharField( max_length=20 ,choices=STATUT )
     date_exped = models.DateTimeField(auto_now=True)
     #tarification = models.ForeignKey(Tarification , on_delete=models.CASCADE)
     numBureau = models.ForeignKey(Destination , on_delete=models.CASCADE)
-    #id_tournée = models.ForeignKey(Tournée, on_delete=models.SET_NULL,null=True)
+    id_tournée = models.ForeignKey(Tournée, on_delete=models.SET_NULL,null=True)
     @property
     def montant_total(self):
         tarifBase = self.numBureau.tarifBase
