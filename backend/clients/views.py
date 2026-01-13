@@ -47,6 +47,7 @@ def client_id_view(request, client_id):
     except Client.DoesNotExist:
         return JsonResponse({"error": "Client not found"}, status=404)
     
+    
 def update_client(request, client_id):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -71,6 +72,7 @@ def update_client(request, client_id):
         except Client.DoesNotExist:
             return JsonResponse({"error": "Client not found"}, status=404)
     return JsonResponse({"error": "Invalid request"}, status=400)
+
 
 def create_client(request):
     if request.method == "POST":
@@ -104,6 +106,7 @@ def delete_clients(request):
         Client.objects.filter(id__in=ids).delete()
         return JsonResponse({"msg":"clients deleted"})
     return JsonResponse({"error": "Invalid request"}, status=400)
+
 
 def search_client(request):
     query = request.GET.get('search').strip()
