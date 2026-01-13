@@ -1,18 +1,26 @@
 
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from .forms import ColisForm
 from .models import Colis
 from django.core.paginator import Paginator
 
 
-def afficher_colis(request): #url done 
+def colis_info(request):
+    return JsonResponse({
+        "poids": "number",
+        "volume": "number",
+        "description": "text",
+    })
+
+
+def afficher_colis(request):
     col = Colis.objects.all().order_by("id")
-    paginator = Paginator(col, 12)  
+    paginator = Paginator(col, 12)
     page_nbr = request.GET.get("page")
-    page = paginator.get_page(page_nbr)
-    return render(request,"journalColis.html",{"page": page})
+    page_obj = paginator.get_page(page_nbr)
 
-
+    return render(request,"pages/colis.html",{"page_obj": page_obj,"colis": page_obj,})
 
 
 def rechercher_colis(request) :
@@ -24,7 +32,7 @@ def rechercher_colis(request) :
         
         if colis :
             return render(request,"searchColis.html",{"colis":colis})
-    return render(request,"journalColis.html")
+    return render(request,"pages/colis.html")
 
 
 

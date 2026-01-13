@@ -11,39 +11,35 @@
 <body>
     {% include "components/navbar.html" %}
 <div class="d-flex flex-column justify-content-start gap-4 " style="width: 100%; padding-top: 2px;"> <!-- whole content container-->
-    {% include "components/header.html" with page_name="Tables" sous_page_name="client" %}
+    {% include "components/header.html" with page_name="Tables" sous_page_name="coli" %}
 
     <div class="d-flex flex-column align-items-center justify-content-center px-4 gap-4"> <!-- table content container-->
         <div class="table-frame overflow-hidden" style="width: 100%;">
-           <table class="table table-hover table-md table-outline" data-name="clients">
+            <table class="table table-hover table-md table-outline" data-name="colis">
                 <thead>
                     <tr>
-                        <th scope="col">ID Client</th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Prenom</th>
-                        <th scope="col">Num Telephone</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Solde Eventuel</th>
+                        <th scope="col">ID Clis</th>
+                        <th scope="col">poids</th>
+                        <th scope="col">volume</th>
+                        <th scope="col">description</th>
                     </tr>
                 </thead>
                 <tbody id="body">
-                    {% for client in clients %}
+                    {% for coli in colis %}
                     <tr>
                         <td scope="row">
-                            <input class="form-check-input row-checkbox" type="checkbox" data-id="{{ client.id }}">
-                            <label class="form-check-label">{{ client.id }}</label>
+                            <input class="form-check-input row-checkbox" type="checkbox" data-id="{{ coli.id }}">
+                            <label class="form-check-label">{{ coli.id }}</label>
                         </td>
-                        <td>{{ client.nom }}</td>
-                        <td>{{ client.prenom }}</td>
-                        <td>{{ client.telephone }}</td>
-                        <td>{{ client.email }}</td>
-                        <td>{{ client.solde }}</td>
+                        <td>{{ coli.poids }}</td>
+                        <td>{{ coli.volume }}</td>
+                        <td>{{ coli.description }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-    {% include "components/paginator.html" with clients=page_obj %}
+    {% include "components/paginator.html" with colis=page_obj %}
     </div>
 </div>
 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">

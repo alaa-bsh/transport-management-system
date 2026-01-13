@@ -110,6 +110,47 @@ $avatar-sizes: (
   ),
 );
 
+$range-slider-track-width:                 100%;
+$range-slider-track-height:                .5rem;
+$range-slider-track-cursor:                pointer;
+$range-slider-track-bg:                    var(--#{$prefix}secondary-bg);
+$range-slider-track-border-radius:         1rem;
+$range-slider-track-box-shadow:            var(--#{$prefix}box-shadow-inset);
 
+$range-slider-track-in-range-bg:           rgba(var(--#{$prefix}primary-rgb), .5);
+$range-slider-disabled-track-in-range-bg:  rgba(var(--#{$prefix}secondary-rgb), .375);
+
+$range-slider-label-padding-y:             0;
+$range-slider-label-padding-x:             0;
+$range-slider-label-font-size:             $font-size-sm;
+$range-slider-label-color:                 var(--#{$prefix}body-color);
+
+$range-slider-thumb-width:                 1rem;
+$range-slider-thumb-height:                $range-slider-thumb-width;
+$range-slider-thumb-bg:                    $component-active-bg;
+$range-slider-thumb-border:                0;
+$range-slider-thumb-border-radius:         1rem;
+$range-slider-thumb-box-shadow:            0 .1rem .25rem rgba($black, .1);
+$range-slider-thumb-focus-box-shadow:      0 0 0 1px $body-bg, $input-focus-box-shadow;
+$range-slider-thumb-active-bg:             tint-color($primary, 70%);
+$range-slider-thumb-disabled-bg:           rgba(var(--#{$prefix}secondary-rgb), 1);
+$range-slider-thumb-transition:            background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+$range-slider-tooltip-padding-y:           $spacer * .25;
+$range-slider-tooltip-padding-x:           $spacer * .5;
+$range-slider-tooltip-margin-end:          .25rem;
+$range-slider-tooltip-margin-bottom:       .25rem;
+$range-slider-tooltip-font-size:           $font-size-sm;
+$range-slider-tooltip-color:               var(--#{$prefix}body-color);
+$range-slider-tooltip-bg:                  var(--#{$prefix}secondary-bg);
+$range-slider-tooltip-border-radius:       var(--#{$prefix}border-radius);
+$range-slider-tooltip-box-shadow:          var(--#{$prefix}box-shadow);
+$range-slider-tooltip-transition:          visibility .15s, opacity .15s ease;
+
+$range-slider-tooltip-arrow-width:         .8rem;
+$range-slider-tooltip-arrow-height:        .4rem;
+
+$range-slider-vertical-track-width:        .5rem;
+$range-slider-vertical-track-height:       10rem;
 
 @import '../bootstrap/scss/bootstrap';

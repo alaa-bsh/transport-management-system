@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'backend.manageExpedition',
     'backend.manageDestination',
     'backend.reclamations',
+    'backend.historique.apps.HistoriqueConfig',
+    'backend.typeservice',
 ]
 
 MIDDLEWARE = [
