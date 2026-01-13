@@ -585,6 +585,37 @@ progress {
 
 /*added*/ 
 
+.range-slider {
+  --cui-range-slider-track-width: 100%;
+  --cui-range-slider-track-height: 0.5rem;
+  --cui-range-slider-track-cursor: pointer;
+  --cui-range-slider-track-bg: var(--bs-secondary-bg);
+  --cui-range-slider-track-border-radius: 1rem;
+  --cui-range-slider-track-box-shadow: var(--bs-box-shadow-inset);
+
+  --cui-range-slider-track-in-range-bg: rgba(var(--bs-primary-rgb), 0.5);
+  --cui-range-slider-disabled-track-in-range-bg: rgba(var(--bs-secondary-rgb), 0.375);
+
+  --cui-range-slider-label-padding-y: 0;
+  --cui-range-slider-label-padding-x: 0;
+  --cui-range-slider-label-font-size: 0.875rem;
+  --cui-range-slider-label-color: var(--bs-body-color);
+
+  --cui-range-slider-thumb-width: 1rem;
+  --cui-range-slider-thumb-height: 1rem;
+  --cui-range-slider-thumb-bg: var(--bs-primary);
+  --cui-range-slider-thumb-border: 0;
+  --cui-range-slider-thumb-border-radius: 1rem;
+  --cui-range-slider-thumb-box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.1);
+  --cui-range-slider-thumb-focus-box-shadow: 0 0 0 1px var(--bs-body-bg), var(--bs-focus-ring-shadow);
+  --cui-range-slider-thumb-active-bg: #cfe2ff;
+  --cui-range-slider-thumb-disabled-bg: rgba(var(--bs-secondary-rgb), 1);
+  --cui-range-slider-thumb-transition: background-color .15s ease-in-out,
+                                       border-color .15s ease-in-out,
+                                       box-shadow .15s ease-in-out;
+}
+
+
 .hidden-action-bar {
   display: none !important;
 }

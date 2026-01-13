@@ -1,7 +1,10 @@
 from django.db import models    
+from backend.typeservice.models import TypeService
 from backend.manageDestination.models import Destination
 from backend.logistics.models import Chauffeur
 from backend.logistics.models import Vehicule
+from backend.reclamations.models import Reclamation
+
 
 class Tournée(models.Model) : 
     dateTourne = models.DateField()
@@ -16,7 +19,7 @@ class Tournée(models.Model) :
 class Facture (models.Model) :
     id_client = models.OneToOneField('clients.Client', on_delete=models.CASCADE)
     date_fact = models.DateField(auto_now=True)
-    #reclamation = models.OneToOneField(Reclamation , on_delete=models.CASCADE)
+    reclamation = models.OneToOneField(Reclamation , on_delete=models.CASCADE)
 
     @property
     def montant_HT(self):
@@ -43,7 +46,7 @@ class Expedition(models.Model) :
     ]
     id_Exp = models.CharField(max_length=10 , primary_key=True , default="JHY-52")
     id_client = models.ForeignKey('clients.Client', on_delete=models.CASCADE, default=0)
-    #id_service = models.ForeignKey(typeService , on_delete=models.CASCADE)
+    id_service = models.ForeignKey(TypeService , on_delete=models.CASCADE)
     statut = models.CharField( max_length=20 ,choices=STATUT )
     date_exped = models.DateTimeField(auto_now=True)
     #tarification = models.ForeignKey(Tarification , on_delete=models.CASCADE)
