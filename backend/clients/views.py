@@ -15,7 +15,10 @@ def client_info(request):
     })
 
 
-def client_view(request):
+
+def client_data(request):
+
+    table_fields = ["nom", "prenom", "telephone", "email", "solde"]
     
     cli = Client.objects.all().order_by("id")  
     sort_order = request.GET.get('sort', 'new')  
@@ -28,7 +31,18 @@ def client_view(request):
     page_nbr = request.GET.get("page") 
     page_obj = paginator.get_page(page_nbr) 
 
-    return render(request, 'pages/tables/client.html', {"page_obj": page_obj, "clients": page_obj,})
+    all_data = [
+        {
+            "id": c.id,
+            "nom": c.nom,
+            "prenom": c.prenom,
+            "telephone": c.telephone,
+            "email": c.email,
+            "solde": c.solde,
+        } for c in page_obj.object_list
+    ]
+
+    return render(request, 'pages/main.html', {"page_obj": page_obj, "clients": page_obj, "table_name": "clients", "data_structure" : all_data , "headers": table_fields , "sort_order": sort_order})
 
 
 def client_id_view(request, client_id):

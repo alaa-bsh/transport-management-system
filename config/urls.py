@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('clients/', include('backend.clients.urls'), name='clients'),
     path('colis/', include('backend.manageColis.urls'), name='colis'),
-    # path("chauffeur/", include('backend.logistics.urls')),
+    path("chauffeurs/", include('backend.logistics.urls')),
     # path("vehicule/", include('backend.logistics.urls')),
     path("destination/", include('backend.manageDestination.urls')),
     # path("type_service/", views.type_service_view, name="type_service"),
