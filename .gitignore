@@ -1,14 +1,20 @@
-# Windows
-desktop.ini
-
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
+.env
+env/
+venv/
 
 # Django
-env/
 db.sqlite3
+staticfiles/
+media/
 
-# IDE
+# Node
+node_modules/
+dist/
+
+# OS / IDE
 .vscode/
 .idea/
+.DS_Store
