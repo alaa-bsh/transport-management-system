@@ -4,10 +4,11 @@ class Chauffeur(models.Model):
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
     numPermis = models.CharField(max_length=50, unique=True)
-    Tel = models.CharField(max_length=20)
-    Email = models.EmailField(unique=True)
-    Disponibilite = models.BooleanField(default=True)
-    Adress = models.TextField()
+    telephone = models.CharField(max_length=20)
+    email = models.EmailField(unique=True)
+    disponibilite = models.BooleanField(default=True)
+    adresse = models.TextField()
+    date_creation = models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):
         return self.nom + '-'+ self.prenom

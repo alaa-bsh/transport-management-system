@@ -1,11 +1,10 @@
-document.addEventListener("DOMContentLoaded", () => {
+export function btnLogic() {
   const actionBar = document.getElementById("actionBar");
   const viewBtn = document.getElementById("viewBtn");
-  const editBtn = document.getElementById("editBtn");
+  const editBtn = document.getElementById("editBtn"); 
   const addBtn = document.getElementById("addBtn");
   const deleteBtn = document.getElementById("deleteBtn");
   const saveBtn = document.getElementById("savebtn");
-  const checkboxes = document.querySelectorAll('.row-checkbox');
   const table = document.querySelector("table[data-name]");
   const name = table.dataset.name;
 
@@ -15,7 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function updateActionBar() {
-    const checked = Array.from(checkboxes).filter(cb => cb.checked);
+    const currentCheckboxes = document.querySelectorAll('.row-checkbox');
+    const checked = Array.from(currentCheckboxes).filter(cb => cb.checked);
+    
     if (checked.length > 0) {
       actionBar.classList.remove('d-none');
       actionBar.classList.add('d-flex');
@@ -26,8 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
       actionBar.classList.add('d-none');
     }
   }
-  checkboxes.forEach(cb => cb.addEventListener("change", updateActionBar));
 
+  document.addEventListener("change", function (e) {
+        if (e.target.classList.contains("row-checkbox")) {
+            updateActionBar();
+        }
+  });
 
 
   function openEditModal(id) {
@@ -49,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   viewBtn.addEventListener("click", async () => {
-    const checked = Array.from(checkboxes).filter(cb => cb.checked);
+    const checked = document.querySelectorAll('.row-checkbox:checked');
     if (checked.length !== 1) return;
     const id = checked[0].dataset.id;
 
@@ -82,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   editBtn.addEventListener("click", async () => {
-    const checked = Array.from(checkboxes).filter(cb => cb.checked);
+    const checked = document.querySelectorAll('.row-checkbox:checked');
     if (checked.length !== 1) return;
     const id = checked[0].dataset.id;
 
@@ -91,11 +96,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) throw new Error("Data not found");
       const data = await response.json();
 
+      infoModalEl.dataset.id = id;
+
       modalBody.innerHTML = "";
       saveBtn.classList.remove("d-none");
       saveBtn.classList.add("d-inline-flex");
 
       for (let key in data) {
+        if (key === "id" || key === "date_creation") continue;
+        
         const div = document.createElement("div");
         div.classList.add("mb-2", "gap-4");
 
@@ -107,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         input.type = "text";
         input.classList.add("form-control");
         input.value = data[key];
+        input.name = key;
 
         div.appendChild(label);
         div.appendChild(input);
@@ -171,8 +181,7 @@ saveBtn.addEventListener("click", async () => {
   const inputs = modalBody.querySelectorAll("input");
   const dataToSend = {};
   inputs.forEach(input => {
-    const key = input.previousElementSibling.textContent.toLowerCase();
-    dataToSend[key] = input.value;
+    dataToSend[input.name] = input.value;
   });
 
   const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -180,7 +189,7 @@ saveBtn.addEventListener("click", async () => {
   try {
     let url = "";
     if (mode === "edit") {
-      url = `/${name}/${id}/update/`;
+      url = `/${name}/${id}/edit/`;
     } else if (mode === "create") {
       url = `/${name}/create/`;
     }
@@ -200,10 +209,21 @@ saveBtn.addEventListener("click", async () => {
 
     if (mode === "edit") {
       const row = document.querySelector(`.row-checkbox[data-id="${id}"]`).closest("tr");
-      let cellIndex = 1;
+      let cellIndex = 0;
       for (let key in data) {
-        row.cells[cellIndex].textContent = data[key];
-        cellIndex++;
+        if (key === "id") {
+      row.cells[cellIndex].innerHTML = `
+        <input class="form-check-input row-checkbox" type="checkbox" data-id="${data.id}">
+        <label class="form-check-label">${data.id}</label>
+      `;
+    } else if (key === "disponibilite") {
+      const badgeClass = data[key] ? "badge-success" : "badge-failure";
+      const badgeText = data[key] ? "Disponible" : "Non Disponible";
+      row.cells[cellIndex].innerHTML = `<span class="badge ${badgeClass}">${badgeText}</span>`;
+    } else {
+      row.cells[cellIndex].textContent = data[key];
+    }
+    cellIndex++;
       }
     } else if (mode === "create") {
       console.log("Created client:", data);
@@ -219,33 +239,41 @@ saveBtn.addEventListener("click", async () => {
 
  infoModalEl.addEventListener("hidden.bs.modal", () => {
     history.replaceState(null, "", `/${name}/`);
+     window.location.reload();
+  });
+
+  
+
+  deleteBtn.addEventListener("click", async () => {
+    const checked = Array.from(document.querySelectorAll('.row-checkbox:checked'));
+    if (checked.length === 0) return;
+
+    const ids = checked.map(cb => cb.dataset.id);
+
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    try {
+      const response = await fetch(`/${name}/delete/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken
+        },
+        body: JSON.stringify({ ids })
+      });
+
+      if (!response.ok) throw new Error("Delete failed");
+
+      checked.forEach(cb => cb.closest('tr').remove());
+      
+      actionBar.classList.add('d-none');
+      actionBar.classList.remove('d-flex');
+
+    } catch (err) {
+      console.error(err);
+      alert("Delete failed");
+    }
   });
  
-});
+};
 
-deleteBtn.addEventListener("click", async () => {
-  const checked = Array.from(document.querySelectorAll('.row-checkbox:checked'));
-  if (checked.length === 0) return;
 
-  const ids = checked.map(cb => cb.dataset.id);
-
-  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-  try {
-    const response = await fetch('/clients/delete/', {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": csrfToken
-      },
-      body: JSON.stringify({ ids })
-    });
-
-    if (!response.ok) throw new Error("Delete failed");
-
-    checked.forEach(cb => cb.closest('tr').remove());
-  } catch (err) {
-    console.error(err);
-    alert("Delete failed");
-  }
-});
