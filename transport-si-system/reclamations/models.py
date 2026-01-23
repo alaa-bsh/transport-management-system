@@ -2,10 +2,7 @@ from django.db import models
 from clients.models import Client
 from incidents.models import Incident
 from manageExpedition.models import Expedition
-from manageExpedition.models import Facture
-from typeservice.models import TypeService 
-
-
+from typeservice.models import TypeService
 
 class Reclamation(models.Model):
     STATUT = [
@@ -13,18 +10,15 @@ class Reclamation(models.Model):
         ('resolue', 'Résolue'),
         ('annulee', 'Annulée'),
     ]
-    client = models.ForeignKey(Client,on_delete=models.CASCADE,related_name='reclamations')
-    incident = models.ForeignKey(Incident,on_delete=models.SET_NULL,related_name='reclamations',null=True)
-    expedition = models.ForeignKey(Expedition,on_delete=models.SET_NULL,related_name='reclamations',null=True)
-    facture = models.ForeignKey(Facture,on_delete=models.SET_NULL,related_name='reclamations',null=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='reclamations')
+    incident = models.ForeignKey(Incident, on_delete=models.SET_NULL, related_name='reclamations', null=True)
+    expedition = models.ForeignKey(Expedition, on_delete=models.SET_NULL, related_name='reclamations', null=True)
+    facture = models.ForeignKey('manageExpedition.Facture', on_delete=models.SET_NULL, related_name='reclamations', null=True)
     objet = models.CharField(max_length=200)
     description = models.TextField()
     date_reclamation = models.DateTimeField(auto_now_add=True)
-    statut = models.CharField(max_length=20,choices=STATUT,default='en_cours')
-    typeService = models.ForeignKey(TypeService,on_delete=models.PROTECT,related_name='reclamations')
- 
-  
-
-
+    statut = models.CharField(max_length=20, choices=STATUT, default='en_cours')
+    typeService = models.ForeignKey(TypeService, on_delete=models.PROTECT, related_name='reclamations')
+    
     def __str__(self):
         return f"#{self.id} - {self.client.nom}"

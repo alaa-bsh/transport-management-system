@@ -1,3 +1,4 @@
+
 from django.http import JsonResponse
 from .models import Client
 
@@ -8,7 +9,7 @@ def client_list(request):
             "id": c.id,
             "nom": c.nom,
             "prenom": c.prenom,
-            "email": c.email,
+            "email": c.adrMAIL,
             "telephone": c.telephone,
             "solde": float(c.solde),
         }

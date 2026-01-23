@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class TypeService(models.Model):
     STANDARD = 'standard'
     EXPRESS = 'express'

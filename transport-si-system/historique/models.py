@@ -2,7 +2,6 @@ from django.db import models
 from clients.models import Client
 from manageExpedition.models import Expedition
 
-
 class Historique(models.Model):
     client = models.ForeignKey(
         Client,
