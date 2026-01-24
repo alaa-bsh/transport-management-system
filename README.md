@@ -141,11 +141,10 @@ flowchart LR
     Navigation -->|Navigate| Features["Favorite"]
     Navigation -->|Navigate| TablesData["Tables & Data"]
     Navigation -->|Navigate| Expeditions["Gestion des Expéditions"]
-    Navigation -->|Navigate| Tournees["Gestion des Tournées"]
+
     Navigation -->|Navigate| Facturation["Facturation & Paiement"]
     Navigation -->|Navigate| Incidents["Gestion des Incidents"]
     Navigation -->|Navigate| Reclamations["Gestion des Réclamations"]
-    Navigation -->|Navigate| Analyse["Dashboard"]
     TablesData --> Client[Table client]
     TablesData --> Chauffeurs[Table Chauffeurs]
     TablesData --> Vehicule[Table Vehicule]
