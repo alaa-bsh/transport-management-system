@@ -141,7 +141,6 @@ flowchart LR
     Navigation -->|Navigate| Features["Favorite"]
     Navigation -->|Navigate| TablesData["Tables & Data"]
     Navigation -->|Navigate| Expeditions["Gestion des Expéditions"]
-
     Navigation -->|Navigate| Facturation["Facturation & Paiement"]
     Navigation -->|Navigate| Incidents["Gestion des Incidents"]
     Navigation -->|Navigate| Reclamations["Gestion des Réclamations"]
@@ -186,24 +185,58 @@ python manage.py runserver
 ### 2. Navigate Modules
 
 * **Clients:** view, add, edit, or delete client records.
+* **Chauffeur & Vehicule:** view, add, edit, or delete logistics records.
 * **Expeditions:** manage shipments, track statuses.
-* **Tournee:** assign drivers and vehicles.
+* **Tours:** assign drivers and vehicles.
 * **Billing & Payments:** manage invoices and payments.
 * **Incidents & Reclamations:** log and track incidents or complaints.
 
-### 3. Common Actions
+### 3. Module Overview
 
-* **Search:** look up specific records.
-* **Filter:** refine data based on the NEW & OLD criteria. 
-* **Pagination:** navigate through pages of records.
+* **Clients:** manage client information (CRUD operations) and track account balances.
+* **Expeditions:** register shipments with **automatically calculated costs** based on:
 
-### 4. Data Management
+```
+Montant total = Tarif de base + (Poids × Tarif poids) + (Volume × Tarif volume)
+```
 
-* **Add New Record:** click “Add” buttons, fill in forms, submit.
-* **Edit Record:** modify existing records via edit forms.
-* **Delete Record:** remove records (with confirmation).
-* **Print:** print table data (if implemented).
+* **Tours:** assign shipments to drivers and vehicles, track delivery routes.
+* **Billing & Payments:** generate invoices, calculate taxes, track partial/full payments, and update client balances automatically.
+* **Incidents & Reclamations:** log issues and complaints, associate with shipments, and track resolution status.
+* **Analysis & Reporting:** generate dashboards with  delivery success rates, top clients, top drivers, high-incident areas..
 
+### 4. Common Actions
+
+* **CRUD operations:** add, edit, delete records for all tables.
+* **Search & Filter:** query shipments, clients, invoices, and incidents by any attribute (date, status, client, type of service).
+* **Sort & Pagination:** organize large datasets efficiently.
+* **JSON:** all backend responses are returned in JSON format, ready for frontend consumption.
+
+*Example JSON response for a client:*
+
+```json
+    {
+        "nom": "string",
+        "prenom": "string",
+        "telephone": "string",
+        "email": "string",
+        "solde": "number",
+    }
+```
+
+### 4. Business Logic Highlights
+
+* **Automatic cost calculation:** shipping costs consider weight, volume, service type, and destination.
+* **Tracking & status updates:** shipment statuses evolve : *en transit → en centre de tri → en cours de livraison → livré / échec de livraison*.
+* **Invoice & payment management:** partial payments update client balance; 
+* **Route management:** tours group shipments, assign drivers/vehicles, and log route metrics (distance, fuel, incidents).
+
+### 5. Developer Tips
+
+* All modules follow the **Django MVC pattern**.
+* Each app has `models.py`, `views.py`, `urls.py`, `admin.py`.
+* API endpoints return **JSON** for frontend integration.
+* Only one table/module example is shown; all other modules behave similarly.
 
 
 
