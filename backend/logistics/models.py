@@ -4,11 +4,11 @@ class Chauffeur(models.Model):
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
     numPermis = models.CharField(max_length=50, unique=True)
-    Tel = models.CharField(max_length=20)
-    Email = models.EmailField(unique=True)
-    Disponibilite = models.BooleanField(default=True)
+    telephone = models.CharField(max_length=20)
+    email = models.EmailField(unique=True)
+    disponibilite = models.BooleanField(default=True)
     # FIXED: Changed from 'Adress' to 'Adresse'
-    Adresse = models.TextField()
+    adresse = models.TextField()
 
     def __str__(self):
         return self.nom + '-'+ self.prenom
@@ -24,7 +24,7 @@ class Vehicule(models.Model):
     capacitePoids = models.FloatField()
     capaciteVolume = models.FloatField()
     consommationCarburant = models.FloatField()
-    etat = models.CharField(max_length=50, choices = ETAT, default='Dispo')
+    disponibilite = models.CharField(max_length=50, choices = ETAT, default='Dispo')
 
     def __str__(self):
         return self.numImmat

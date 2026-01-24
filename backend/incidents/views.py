@@ -61,7 +61,7 @@ def incident_data(request):
     return render(request, 'pages/main.html', {
         "page_obj": page_obj,
         "incidents": page_obj,
-        "table_name": "Incidents",
+        "table_name": "incidents",
         "data_structure": all_data,
         "headers": table_fields,
         "sort_order": sort_order,

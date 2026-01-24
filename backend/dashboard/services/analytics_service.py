@@ -387,7 +387,7 @@ class DashboardCalculator:
         }
 
 
-from clients.models import Client
-from manageExpedition.models import Expedition, Tournee
-from logistics.models import Chauffeur
-from incidents.models import Incident
+from backend.clients.models import Client
+from backend.manageExpedition.models import Expedition, Tournee
+from backend.logistics.models import Chauffeur
+from backend.incidents.models import Incident
