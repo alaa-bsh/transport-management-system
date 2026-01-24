@@ -158,8 +158,8 @@ flowchart LR
     Tarification --> Ops
     Expeditions --> expedition[Table expedition]
     Expeditions --> Tournee[Table Tournee]
-    Tournee --> Ops["Create / View / Modify / Delete / Search"]
-    expedition --> Ops["Create / View / Modify / Delete / Search"]
+    Tournee --> Ops["Create / View / Modify / Delete / Search / Sort"]
+    expedition --> Ops["Create / View / Modify / Delete / Search / Sort"]
     Facturation --> facture[Table facture]
     Facturation --> paiement[Table paiement]
     facture --> Ops
@@ -208,11 +208,11 @@ Montant total = Tarif de base + (Poids × Tarif poids) + (Volume × Tarif volume
 ### 4. Common Actions
 
 * **CRUD operations:** add, edit, delete records for all tables.
-* **Search & Filter:** query shipments, clients, invoices, and incidents by any attribute (date, status, client, type of service).
+* **Search & Filter:** query all tables and filter based on certain criteria (OLD and NEW).
 * **Sort & Pagination:** organize large datasets efficiently.
 * **JSON:** all backend responses are returned in JSON format, ready for frontend consumption.
 
-*Example JSON response for a client:*
+Example JSON response for a client:
 
 ```json
     {
@@ -235,8 +235,8 @@ Montant total = Tarif de base + (Poids × Tarif poids) + (Volume × Tarif volume
 
 * All modules follow the **Django MVC pattern**.
 * Each app has `models.py`, `views.py`, `urls.py`, `admin.py`.
-* API endpoints return **JSON** for frontend integration.
-* Only one table/module example is shown; all other modules behave similarly.
+* All views return responses in JSON format for data exchange with the user interface.
+* Only one table/module example is shown, however all other modules behave similarly.
 
 
 
