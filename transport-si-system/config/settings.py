@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'reclamations',
     'typeservice',
     'tarification',
+    'Trajet',
    
 ]
 

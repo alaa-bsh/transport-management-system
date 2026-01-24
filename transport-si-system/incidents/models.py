@@ -1,5 +1,6 @@
 from django.db import models
 from manageExpedition.models import Tournee
+from Trajet.models import Trajet
 
 class Incident(models.Model):
     TYPE_INCIDENTS = [
@@ -14,6 +15,7 @@ class Incident(models.Model):
     description = models.TextField()
     date_reported = models.DateTimeField(auto_now_add=True)
     resolu = models.BooleanField(default=False)
+    trajet = models.ForeignKey(Trajet, on_delete=models.CASCADE, null=True,blank=True,verbose_name="Trajet associé")
 
     def __str__(self):
         tour_id = self.tour.id if self.tour else "No Tour"
