@@ -22,8 +22,8 @@
                     {{sous_page_name}}
                     </button>
                     <ul class="dropdown-menu" style="width: 180px;">
-                        <li><a class="dropdown-item" href="{% url 'dashboard' %}">Analyse commercialte</a></li>
-                        <li><a class="dropdown-item" href="{% url 'dashboard2' %}">Analyse Operationelle</a></li>
+                        <a class="dropdown-item" href="{% url 'dashboard_commerciale' %}">Analyse commerciale</a>
+                        <a class="dropdown-item" href="{% url 'dashboard_operationelle' %}">Analyse Operationelle</a>
                     </ul>
                 </div>
 
@@ -101,11 +101,11 @@
                             <li><a class="dropdown-item" href="{% url 'factures' %}">Facture</a></li>
                         </ul>
                     </div>
-                    {% elif page_name == "Incidents" or page_name == "reclamations" %}
+                    {% elif page_name == "incidents" or page_name == "reclamations" %}
                         
                     {% endif %}
                     
-                    <div class="d-flex gap-3 justify-content-between align-items-center" {%if page_name == "Incidents" or page_name == "reclamations" %} style="width: 100%;" {% endif %}> <!-- print + add button container-->
+                    <div class="d-flex gap-3 justify-content-between align-items-center" {%if page_name == "incidents" or page_name == "reclamations" %} style="width: 100%;" {% endif %}> <!-- print + add button container-->
                         <button class="btn btn-secondary btn-md gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
                             <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
