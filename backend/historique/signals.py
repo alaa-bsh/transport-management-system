@@ -7,7 +7,6 @@ from .models import Historique
 
 @receiver(post_save, sender=Expedition)
 def create_historique_on_expedition_create(sender, instance, created, **kwargs):
-    name = 'backend.historique'
     if created:
         Historique.objects.create(
             client=instance.client,

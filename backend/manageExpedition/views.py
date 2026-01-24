@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, render
 from .forms import ExpeditionForm
-from .forms import TournéeForm
+from .forms import TourneeForm
 from .forms import FactureForm
-from .models import Expedition, Tournée , Facture
+from .models import Expedition, Tournee , Facture
 from django.core.paginator import Paginator
 
 
@@ -79,7 +79,7 @@ def selected_row_info_to_print(request,pk): #url done
 # Here start views tae Tournee ---------------------------------------------------------------------------------------
 
 def afficher_tournee(request): #url done 
-    exp = Tournée.objects.all().order_by("id")
+    exp = Tournee.objects.all().order_by("id")
     paginator = Paginator(exp, 12)  
     page_nbr = request.GET.get("page")
     page = paginator.get_page(page_nbr)
@@ -93,7 +93,7 @@ def rechercher_tournee(request) :
         query= request.GET.get('searchField') # asm l field tae html
 
     if query :
-        tournee = Tournée.objects.filter(id__contains = query)
+        tournee = Tournee.objects.filter(id__contains = query)
         
         if tournee :
             return render(request,"searchTournee.html",{"tournee":tournee})
@@ -103,34 +103,34 @@ def rechercher_tournee(request) :
 
 def ajouter_tournee(request): #url done 
     if request.method == "POST":
-        form = TournéeForm(request.POST)
+        form = TourneeForm(request.POST)
 
         if form.is_valid() :
             form.save()
-            form = TournéeForm()
+            form = TourneeForm()
             return render(request, "ajouterTour.html", {"form": form})
     else :
-        form = TournéeForm()
+        form = TourneeForm()
         return render (request , "ajouterTour.html" , {"form":form})
     
 
 
 
 def edit_tournee(request,pk): #url done 
-    tour = Tournée.objects.get(id=pk)
+    tour = Tournee.objects.get(id=pk)
     if request.method == 'POST':
-            form = TournéeForm(request.POST,instance=tour)
+            form = TourneeForm(request.POST,instance=tour)
             if form.is_valid() :
                 form.save()
                 return redirect("liste tournee")
     
     else :
-        form = TournéeForm(instance=tour)
+        form = TourneeForm(instance=tour)
         return render(request,"tourneEdit.html",{"form":form})
     
 
 def delete_tournee(request,pk): #url done 
-    tour =Tournée.objects.get(id=pk)
+    tour =Tournee.objects.get(id=pk)
     if request.method== 'GET' :
         tour.delete()
     return redirect("liste tournee")
@@ -138,7 +138,7 @@ def delete_tournee(request,pk): #url done
 
 
 def selected_row_info(request,pk): #url done 
-    tour = Tournée.objects.get(id=pk)
+    tour = Tournee.objects.get(id=pk)
     return render (request,"infoTournee.html", {"tour":tour})
 
 

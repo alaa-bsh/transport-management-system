@@ -1,5 +1,5 @@
 from django import forms
-from .models import Expedition, Facture, Tournée
+from .models import Expedition, Facture, Tournee
 
 
 class ExpeditionForm(forms.ModelForm):
@@ -8,9 +8,9 @@ class ExpeditionForm(forms.ModelForm):
         fields="__all__"
 
 
-class TournéeForm(forms.ModelForm):
+class TourneeForm(forms.ModelForm):
     class Meta:
-        model = Tournée
+        model = Tournee
         fields="__all__"
 
 

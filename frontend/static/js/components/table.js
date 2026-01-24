@@ -28,16 +28,34 @@ export async function tableLogic() {
           </td>
       `;
 
-      for (const key in item) {
-        if (key !== "id") {
-          if (key === "disponibilite") {
-            const badgeClass = item[key] ? "badge-success" : "badge-failure";
-            const badgeText = item[key] ? "Disponible" : "Non Disponible";
+    for (const key in item) {
+      if (key !== "id") {
+
+        if (key === "disponibilite") {
+          const badgeClass = item[key] ? "badge-success" : "badge-failure";
+          const badgeText = item[key] ? "Disponible" : "Non Disponible";
+          row += `<td><span class="badge ${badgeClass}">${badgeText}</span></td>`;
+        
+        } else if (key === "resolu") {
+          const badgeClass = item[key] ? "badge-success" : "badge-failure";
+          const badgeText = item[key] ? "Oui" : "Non";
+          row += `<td><span class="badge ${badgeClass}">${badgeText}</span></td>`;
+
+        } else if (key === "statut") {
+            let badgeClass = "";
+            if (item[key] === "en_cours") badgeClass = "badge-warning";
+            else if (item[key] === "resolue") badgeClass = "badge-success";
+            else if (item[key] === "annulee") badgeClass = "badge-failure";
+
+            const badgeText = item[key].charAt(0).toUpperCase() + item[key].slice(1);
             row += `<td><span class="badge ${badgeClass}">${badgeText}</span></td>`;
-          } else
+        
+        } else {
           row += `<td>${item[key]}</td>`;
         }
+
       }
+    }
 
       row += `</tr>`;
       tablebody.innerHTML += row;

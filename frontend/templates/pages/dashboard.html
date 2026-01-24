@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    {% include "components/navbar.html"%}
+    <div class="d-flex flex-column justify-content-start gap-6 " style="width: 100%; padding-top: 2px;"> <!-- whole content container-->
+        {% include "components/header.html" with page_name="dashboard" sous_page_name="Analyse Commerciale" %}
+  
+        <div class="d-flex gap-9 flex-column px-6">
+            <div class="d-flex gap-4" style="width: 100%;">
+                {% include "components/statistic-cards.html" with title="Nombre d'expéditions" percentage=15 increase=True description="d'augmentation dans le nombre total d'expéditions" %}
+                {% include "components/statistic-cards.html" with title="Nombre de clients" percentage=10 increase=False description="de diminution dans le nombre total de clients" %}
+            </div>
+             <div class="d-flex gap-4" style="width: 100%;">
+                {% include "components/line-chart.html"%}
+                {% include "components/horizontal-chart.html" %}
+            </div>
+            <div class="d-flex flex-column gap-9" >
+                <div class="d-flex gap-4">
+                    {% include "components/pie-chart.html" %}
+                    {% include "components/bar-chart.html" %}
+                </div>
+                <div class="d-flex gap-9">
+                    {% include "components/card.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/components/chart.js' %}"></script>
+<script src="{% static 'js/components/line-chart.js' %}"></script>
+<script src="{% static 'js/components/horizontal.js' %}"></script>
+<script src="{% static 'js/components/bar-chart.js' %}"></script>
+</body>
+</html>

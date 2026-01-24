@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'backend.reclamations',
     'backend.historique.apps.HistoriqueConfig',
     'backend.typeservice',
+    'backend.dashboard',
+    'backend.Trajet',
+    'backend.tarification',
 ]
 
 MIDDLEWARE = [

@@ -3,14 +3,4 @@ from .models import TypeService
 
 @admin.register(TypeService)
 class TypeServiceAdmin(admin.ModelAdmin):
-    list_display = ("id", "typeService")
-
-  
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        return False
+    list_display = ('typeService',)

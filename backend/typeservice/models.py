@@ -11,8 +11,11 @@ class TypeService(models.Model):
         (INTERNATIONAL, 'International'),
     ]
 
-    typeService = models.CharField(max_length=30,choices=TYPE_CHOICES,unique=True, default=STANDARD)
-    Delai = models.CharField(max_length=40 , null=True) 
+    typeService = models.CharField(
+        max_length=30,
+        choices=TYPE_CHOICES,
+        unique=True
+    )
 
     def __str__(self):
         return self.typeService
