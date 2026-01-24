@@ -158,8 +158,8 @@ flowchart LR
     Tarification --> Ops
     Expeditions --> expedition[Table expedition]
     Expeditions --> Tournee[Table Tournee]
-    Tournee --> Ops["Create / View / Modify / Delete / Search"]
-    expedition --> Ops["Create / View / Modify / Delete / Search"]
+    Tournee --> Ops["Create / View / Modify / Delete / Search / Sort"]
+    expedition --> Ops["Create / View / Modify / Delete / Search / Sort"]
     Facturation --> facture[Table facture]
     Facturation --> paiement[Table paiement]
     facture --> Ops
