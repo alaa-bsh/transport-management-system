@@ -2,7 +2,6 @@ from django.db import models
 from backend.clients.models import Client
 from backend.incidents.models import Incident
 from backend.manageExpedition.models import Expedition
-from backend.typeservice.models import TypeService
 
 class Reclamation(models.Model):
     STATUT = [
@@ -18,7 +17,6 @@ class Reclamation(models.Model):
     description = models.TextField()
     date_reclamation = models.DateTimeField(auto_now_add=True)
     statut = models.CharField(max_length=20, choices=STATUT, default='en_cours')
-    typeService = models.ForeignKey(TypeService, on_delete=models.PROTECT, related_name='reclamations')
     
     def __str__(self):
         return f"#{self.id} - {self.client.nom}"

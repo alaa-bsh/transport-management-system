@@ -20,6 +20,7 @@ def incident_info(request):
     "description": "string",
     "date_reported": "string",
     "resolu": "boolean",
+    "trajet": "number",
     })
 
 
@@ -78,6 +79,7 @@ def incident_id_view(request, incident_id):
             "description": incident.description,
             "date_reported": incident.date_reported.strftime("%Y-%m-%d %H:%M"),
             "resolu": incident.resolu,
+            "trajet": incident.trajet.id if incident.trajet else None,
         }
         return JsonResponse(data)
     except Incident.DoesNotExist:
@@ -92,6 +94,7 @@ def update_incident(request, incident_id):
             incident.incident_type = data.get("incident_type", incident.incident_type)
             incident.description = data.get("description", incident.description)
             incident.resolu = data.get("resolu", incident.resolu)
+            incident.trajet_id = data.get("trajet", incident.trajet_id)
             # Updating tour if provided
             tour_id = data.get("tour_id")
             if tour_id is not None:
@@ -132,7 +135,8 @@ def create_incident(request):
             incident_type=data.get("incident_type"),
             description=data.get("description"),
             resolu=data.get("resolu", False),
-            tour=tour
+            tour=tour,
+            trajet_id=data.get("trajet"),
         )
 
         return JsonResponse({

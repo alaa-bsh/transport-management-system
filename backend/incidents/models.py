@@ -12,11 +12,11 @@ class Incident(models.Model):
         ('autre', 'Autre'),
     ]
     incident_type = models.CharField(max_length=50, choices=TYPE_INCIDENTS)
-    tour = models.ForeignKey(Tournee, on_delete=models.SET_NULL, null=True, related_name='incidents')
+    tour = models.ForeignKey(Tournee, on_delete=models.CASCADE, null=True, related_name='incidents')
     description = models.TextField()
     date_reported = models.DateTimeField(auto_now_add=True)
     resolu = models.BooleanField(default=False)
-    trajet = models.ForeignKey(Trajet, on_delete=models.CASCADE, null=True,blank=True,verbose_name="Trajet associé")
+    #trajet = models.ForeignKey(Trajet, on_delete=models.CASCADE, null=True,blank=True,verbose_name="Trajet associé")
 
     def __str__(self):
         tour_id = self.tour.id if self.tour else "No Tour"
