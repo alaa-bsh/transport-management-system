@@ -1,6 +1,5 @@
 import json
 from django.http import JsonResponse
-from django.db.models import Q
 from django.shortcuts import render
 from .models import Chauffeur
 from django.core.paginator import Paginator
@@ -19,13 +18,21 @@ def chauffeur_info(request):
 
 def chauffeur_data(request):
     table_fields = ["nom", "prenom", "numPermis", "telephone", "disponibilite"]
+
+    search_value = "" 
     chauf = Chauffeur.objects.all().order_by("id")  
+
+    if 'search' in request.GET:
+        search_value = request.GET['search']
+        if search_value:  
+            chauf = Chauffeur.objects.filter(nom__istartswith=search_value)
+
     sort_order = request.GET.get('sort', 'new')  
 
     if sort_order == 'old':
-        chauf = Chauffeur.objects.all().order_by('id')  
+        chauf = chauf.order_by('id')  
     else:
-        chauf = Chauffeur.objects.all().order_by('-id')  
+        chauf = chauf.order_by('-id')  
     paginator = Paginator(chauf, 12) 
     page_nbr = request.GET.get("page") 
     page_obj = paginator.get_page(page_nbr) 
@@ -42,7 +49,7 @@ def chauffeur_data(request):
         } for c in page_obj.object_list
     ]
 
-    return render(request, 'pages/main.html', {"page_obj": page_obj, "chauffeurs": page_obj, "table_name": "chauffeurs", "data_structure" : all_data , "headers": table_fields , "sort_order": sort_order})
+    return render(request, 'pages/main.html', {"page_obj": page_obj, "chauffeurs": page_obj, "table_name": "chauffeurs", "data_structure" : all_data , "headers": table_fields , "sort_order": sort_order,"query": search_value})
 
 
 def chauffeur_id_view(request, chauffeur_id):
@@ -128,15 +135,3 @@ def delete_chauffeur(request):
         Chauffeur.objects.filter(id__in=ids).delete()
         return JsonResponse({"msg":"chauffeurs deleted"})
     return JsonResponse({"error": "Invalid request"}, status=400)
-
-
-def search_chaffeur(request):
-    query = request.GET.get('search').strip()
-    chauffeurs = Chauffeur.objects.all() 
-
-    if query:
-        chauffeurs = Chauffeur.objects.filter(
-            Q(id__icontains=query) | Q(nom__icontains=query) | Q(prenom__icontains=query)
-        )
-
-    return render(request, "pages/tables/chauffeurs.html", {"chauffeurs": chauffeurs}, {"query": query})

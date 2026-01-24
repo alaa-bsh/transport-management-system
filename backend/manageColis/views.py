@@ -1,7 +1,6 @@
-
+import json
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
-from .forms import ColisForm
+from django.shortcuts import render
 from .models import Colis
 from django.core.paginator import Paginator
 
@@ -10,73 +9,125 @@ def colis_info(request):
     return JsonResponse({
         "poids": "number",
         "volume": "number",
-        "description": "text",
+        "description": "string",
+        "expedition": "number",  
     })
 
 
-def afficher_colis(request):
-    col = Colis.objects.all().order_by("id")
-    paginator = Paginator(col, 12)
+def colis_data(request):
+    table_fields = ["poids", "volume", "description", "expedition"]
+
+    search_value = ""
+    colis_list = Colis.objects.all().order_by("id")
+
+    # Simple search by description
+    if 'search' in request.GET:
+        search_value = request.GET['search']
+        if search_value:
+            colis_list = Colis.objects.filter(description__istartswith=search_value)
+
+    sort_order = request.GET.get('sort', 'new')
+    if sort_order == 'old':
+        colis_list = colis_list.order_by('id')  
+    else:
+        colis_list = colis_list.order_by('-id')
+
+    paginator = Paginator(colis_list, 12)
     page_nbr = request.GET.get("page")
     page_obj = paginator.get_page(page_nbr)
 
-    return render(request,"pages/colis.html",{"page_obj": page_obj,"colis": page_obj,})
+    all_data = [
+        {
+            "id": c.id,
+            "poids": c.poids,
+            "volume": c.volume,
+            "description": c.description,
+            "expedition": c.expedition.id if c.expedition else None,
+        } for c in page_obj.object_list
+    ]
+
+    return render(request, 'pages/main.html', {
+        "page_obj": page_obj,
+        "colis": page_obj,
+        "table_name": "Colis",
+        "data_structure": all_data,
+        "headers": table_fields,
+        "sort_order": sort_order,
+        "query": search_value
+    })
 
 
-def rechercher_colis(request) :
-    if request.method == "GET" :
-        query= request.GET.get('searchFiled') # asm l field tae html
 
-    if query :
-        colis = Colis.objects.filter(id__contains = query)
-        
-        if colis :
-            return render(request,"searchColis.html",{"colis":colis})
-    return render(request,"pages/colis.html")
+def colis_id_view(request, colis_id):
+    try:
+        c = Colis.objects.get(id=colis_id)
+        data = {
+            "id": c.id,
+            "poids": c.poids,
+            "volume": c.volume,
+            "description": c.description,
+            "expedition": c.expedition.id if c.expedition else None,
+        }
+        return JsonResponse(data)
+    except Colis.DoesNotExist:
+        return JsonResponse({"error": "Colis not found"}, status=404)
 
 
 
-def ajouter_colis(request): #url done 
+def update_colis(request, colis_id):
     if request.method == "POST":
-        form = ColisForm(request.POST)
+        data = json.loads(request.body)
+        try:
+            c = Colis.objects.get(id=colis_id)
+            c.poids = data.get("poids", c.poids)
+            c.volume = data.get("volume", c.volume)
+            c.description = data.get("description", c.description)
+            expedition_id = data.get("expedition")
+            if expedition_id:
+                from backend.manageExpedition.models import Expedition
+                c.expedition = Expedition.objects.get(id=expedition_id)
+            c.save()
 
-        if form.is_valid() :
-            form.save()
-            form = ColisForm()
-            return render(request, "ajouterColis.html", {"form": form})
-    else :
-        form = ColisForm()
-        return render (request , "ajouterColis.html" , {"form":form})
-    
-
-
-
-def edit_colis(request,pk): #url done 
-    col = Colis.objects.get(id=pk)
-    if request.method == 'POST':
-            form = ColisForm(request.POST,instance=col)
-            if form.is_valid() :
-                form.save()
-                return redirect("liste colis")
-    
-    else :
-        form = ColisForm(instance=col)
-        return render(request,"colisEdit.html",{"form":form})
-    
-
-def delete_colis(request,pk): #url done 
-    col = Colis.objects.get(id=pk)
-    if request.method== 'GET' :
-        col.delete()
-    return redirect("liste colis")
+            return JsonResponse({
+                "id": c.id,
+                "poids": c.poids,
+                "volume": c.volume,
+                "description": c.description,
+                "expedition": c.expedition.id if c.expedition else None,
+            })
+        except Colis.DoesNotExist:
+            return JsonResponse({"error": "Colis not found"}, status=404)
+    return JsonResponse({"error": "Invalid request"}, status=400)
 
 
+def create_colis(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        from backend.manageExpedition.models import Expedition
+        expedition = Expedition.objects.get(id=data.get("expedition")) if data.get("expedition") else None
 
-def selected_row_info(request,pk): #url done 
-    col = Colis.objects.get(id=pk) # nheto fi col lista tae colis li their id = pk 
-    return render (request,"infoColis.html", {"col":col}) # we send lel infColis html li reh tafficher l infos 
+        c = Colis.objects.create(
+            poids=data.get("poids", 0),
+            volume=data.get("volume", 0),
+            description=data.get("description", ""),
+            expedition=expedition
+        )
+
+        return JsonResponse({
+            "id": c.id,
+            "poids": c.poids,
+            "volume": c.volume,
+            "description": c.description,
+            "expedition": c.expedition.id if c.expedition else None,
+        })
+    return JsonResponse({"error": "Invalid request"}, status=400)
 
 
-def selected_row_info_to_print(request,pk): #url done 
-    col = Colis.objects.get(id=pk)
-    return render (request,"infoColisPrint.html", {"col":col})
+
+def delete_colis(request):
+    if request.method == "DELETE":
+        data = json.loads(request.body)
+        ids = data.get("ids", [])
+        Colis.objects.filter(id__in=ids).delete()
+        return JsonResponse({"msg": "colis deleted"})
+    return JsonResponse({"error": "Invalid request"}, status=400)

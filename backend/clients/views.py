@@ -1,6 +1,5 @@
 import json
 from django.http import JsonResponse
-from django.db.models import Q
 from django.shortcuts import render
 from .models import Client
 from django.core.paginator import Paginator
@@ -15,18 +14,26 @@ def client_info(request):
     })
 
 
-
 def client_data(request):
 
     table_fields = ["nom", "prenom", "telephone", "email", "solde"]
     
-    cli = Client.objects.all().order_by("id")  
+    search_value = "" 
+    cli = Client.objects.all().order_by("id") 
+
+    if 'search' in request.GET:
+        search_value = request.GET['search']
+        if search_value:  
+            cli = Client.objects.filter(nom__istartswith=search_value)
+
+
     sort_order = request.GET.get('sort', 'new')  
 
     if sort_order == 'old':
-        cli = Client.objects.all().order_by('date_creation')  
+        cli = cli.order_by('date_creation')  
     else:
-        cli = Client.objects.all().order_by('-date_creation')  
+        cli = cli.order_by('-date_creation')  
+
     paginator = Paginator(cli, 12) 
     page_nbr = request.GET.get("page") 
     page_obj = paginator.get_page(page_nbr) 
@@ -42,7 +49,7 @@ def client_data(request):
         } for c in page_obj.object_list
     ]
 
-    return render(request, 'pages/main.html', {"page_obj": page_obj, "clients": page_obj, "table_name": "clients", "data_structure" : all_data , "headers": table_fields , "sort_order": sort_order})
+    return render(request, 'pages/main.html', {"page_obj": page_obj, "clients": page_obj, "table_name": "clients", "data_structure" : all_data , "headers": table_fields , "sort_order": sort_order ,"query": search_value})
 
 
 def client_id_view(request, client_id):
@@ -120,15 +127,3 @@ def delete_clients(request):
         Client.objects.filter(id__in=ids).delete()
         return JsonResponse({"msg":"clients deleted"})
     return JsonResponse({"error": "Invalid request"}, status=400)
-
-
-def search_client(request):
-    query = request.GET.get('search').strip()
-    clients = Client.objects.all() 
-
-    if query:
-        clients = Client.objects.filter(
-            Q(id__icontains=query) | Q(nom__icontains=query) | Q(prenom__icontains=query)
-        )
-
-    return render(request, "pages/tables/clients.html", {"clients": clients}, {"query": query})

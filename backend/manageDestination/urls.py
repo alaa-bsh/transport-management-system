@@ -2,9 +2,10 @@ from django.urls import path
 from . import views 
 
 urlpatterns = [
-    path('liste_dest/', views.afficher_destination, name="liste destination"),
-    path('liste_dest/rechercher_dest/', views.rechercher_destination, name="search dest "),
-    path('liste_dest/ajouter_dest/' , views.ajouter_destination , name="add dest" ),
-    path('liste_dest/<int:pk>/selected_row_edit/', views.edit_destination , name="dest row edit"),
-    path('liste_dest/<int:pk>/selected_row_delete/', views.delete_destination , name="dest row deletion"),
+    path('', views.destination_data, name="destinations"),
+    path('<int:numBureau>/', views.destination_id_view, name="destinations/id"),
+    path('<int:numBureau>/edit/', views.update_destination, name='destinations/edit'),
+    path("create/", views.create_destination, name="destinations/create"),
+    path("delete/", views.delete_destinations, name="destinations/delete"),
+    path("info/", views.destination_info, name="destinations/info"),
 ]

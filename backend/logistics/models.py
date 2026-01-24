@@ -25,7 +25,7 @@ class Vehicule(models.Model):
     capacitePoids = models.FloatField()
     capaciteVolume = models.FloatField()
     consommationCarburant = models.FloatField()
-    etat = models.CharField(max_length=50,choices = ETAT, default='available')
+    disponibilite = models.BooleanField(default=True)
 
     def __str__(self):
         return self.numImmat

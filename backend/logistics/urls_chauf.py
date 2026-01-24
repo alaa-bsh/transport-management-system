@@ -1,5 +1,5 @@
 from django.urls import path
-from . import Chauffeur_views 
+from . import Chauffeur_views , Vehicule_views
 
 urlpatterns = [
     path('', Chauffeur_views.chauffeur_data, name="chauffeurs"),
