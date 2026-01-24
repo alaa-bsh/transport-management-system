@@ -48,8 +48,10 @@ INSTALLED_APPS = [
     'typeservice',
     'tarification',
     'Trajet',
+    'dashboard',
    
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

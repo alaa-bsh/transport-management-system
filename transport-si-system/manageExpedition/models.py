@@ -55,7 +55,6 @@ class Expedition(models.Model):
     def save(self, *args, **kwargs):
         if not self.id_Exp:
             import datetime
-            # Simple ID generation logic
             last_id = Expedition.objects.count() + 1
             date_str = datetime.datetime.now().strftime('%Y%m%d')
             self.id_Exp = f"EXP-{date_str}-{last_id:04d}"

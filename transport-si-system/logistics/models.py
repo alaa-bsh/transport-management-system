@@ -24,7 +24,6 @@ class Vehicule(models.Model):
     capacitePoids = models.FloatField()
     capaciteVolume = models.FloatField()
     consommationCarburant = models.FloatField()
-    # FIXED: Changed default to match choices
     etat = models.CharField(max_length=50, choices = ETAT, default='Dispo')
 
     def __str__(self):

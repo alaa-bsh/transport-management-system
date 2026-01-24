@@ -5,7 +5,7 @@ class Client(models.Model):
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
     telephone = models.CharField(max_length=20)
-    adrMAIL = models.EmailField(unique=True, verbose_name="Email")  # Changed from 'email' to 'adrMAIL'
+    adrMAIL = models.EmailField(unique=True, verbose_name="Email") 
     solde = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     date_creation = models.DateTimeField(auto_now_add=True)
     
