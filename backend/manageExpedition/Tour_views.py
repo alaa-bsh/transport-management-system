@@ -80,7 +80,7 @@ def update_tournee(request, tournee_id):
         try:
             t = Tournée.objects.get(id=tournee_id)
             t.dateTourne = data.get("dateTourne", t.dateTourne)
-            # Assigning foreign keys by id
+            
             if "id_chauff" in data:
                 from backend.logistics.models import Chauffeur
                 t.id_chauff = Chauffeur.objects.get(id=data["id_chauff"])

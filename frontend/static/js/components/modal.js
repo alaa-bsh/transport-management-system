@@ -49,7 +49,7 @@ export function btnLogic() {
   function openAddModal() {
     infoModalEl.dataset.mode = "create";
     infoModal.show();
-    history.pushState({ modal: "add" }, "", `/${name}/create/`);
+    history.replaceState(null, "", `/${name}/`);
   }
 
 
@@ -179,7 +179,23 @@ addBtn.addEventListener("click", async () => {
             </div>
         `;
         div.appendChild(radioContainer);
-      } else {
+        
+      } else if (fields[key].type === "choice") {
+          const select = document.createElement("select");
+          select.classList.add("form-select");
+          select.name = key;
+
+          fields[key].choices.forEach(opt => {
+            const option = document.createElement("option");
+            option.value = opt.value;
+            option.textContent = opt.label;
+            select.appendChild(option);
+          });
+
+          div.appendChild(select);
+        }
+
+      else {
         const input = document.createElement("input");
         input.type = typeMap[fields[key]] || "text";
         input.classList.add("form-control");
@@ -205,21 +221,27 @@ saveBtn.addEventListener("click", async () => {
   const id = infoModalEl.dataset.id;
 
   const dataToSend = {};
+  let fieldTypes = {};
   
   const formElements = modalBody.querySelectorAll("input, select, textarea");
   
   formElements.forEach(element => {
-    if (element.type === 'radio') {
-      if (element.checked) {
-        dataToSend[element.name] = element.value === 'true' ? true : false;
-      }
-    } else if (element.type === 'checkbox') {
-      dataToSend[element.name] = element.checked;
+  if (element.type === 'radio') {
+    if (element.checked) dataToSend[element.name] = element.value === 'true';
+  } else if (element.type === 'checkbox') {
+    dataToSend[element.name] = element.checked;
+  } else {
+    if (element.name === "numBureau") {
+      dataToSend[element.name] = element.value
+        .split(',')
+        .map(v => v.trim())
+        .filter(v => v !== "")
+        .map(Number);
     } else {
       dataToSend[element.name] = element.value;
     }
-  });
-
+  }
+});
   
   const responseInfo = await fetch(`/${name}/info/`);
   if (responseInfo.ok) {
@@ -242,7 +264,6 @@ saveBtn.addEventListener("click", async () => {
     
     if (mode === "edit") {
       url = `/${name}/${id}/edit/`;
-      method = "PUT"; 
     } else if (mode === "create") {
       url = `/${name}/create/`;
     }
@@ -295,8 +316,7 @@ saveBtn.addEventListener("click", async () => {
       }
     } else if (mode === "create") {
       console.log("Created successfully:", data);
-      window.location.reload();
-
+      
     }
 
     infoModal.hide();
@@ -310,7 +330,7 @@ saveBtn.addEventListener("click", async () => {
 
  infoModalEl.addEventListener("hidden.bs.modal", () => {
     history.replaceState(null, "", `/${name}/`);
-     //window.location.reload();
+     window.location.reload();
   });
 
   

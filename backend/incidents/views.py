@@ -6,7 +6,16 @@ from django.core.paginator import Paginator
 
 def incident_info(request):
     return JsonResponse({
-    "incident_type": "string",
+    "incident_type": {
+        "type": "choice",
+        "choices": [
+            {"value": "retard", "label": "Retard"},
+            {"value": "perte", "label": "Perte"},
+            {"value": "dommage", "label": "Dommage"},
+            {"value": "technique", "label": "Problème technique"},
+            {"value": "autre", "label": "Autre"}
+        ]
+    },
     "tour_id": "number",
     "description": "string",
     "date_reported": "string",

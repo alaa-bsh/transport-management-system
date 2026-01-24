@@ -681,7 +681,6 @@ progress {
 }
 
 .arrow-d {
-  transform: rotate(90deg);
   font-size: 35px;
   color: #ff0000; 
 }

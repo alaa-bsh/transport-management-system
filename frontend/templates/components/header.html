@@ -80,7 +80,7 @@
                         </ul>
                     </div>
 
-                    {% elif page_name == "Expeditions" or page_name == "Tournees" or page_name == "Colis" %}
+                    {% elif page_name == "Expeditions" or page_name == "Tournees" or page_name == "colis" %}
                     <div class="dropdown ">
                         <button class="btn btn-secondary btn-md dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{page_name}}
@@ -101,11 +101,11 @@
                             <li><a class="dropdown-item" href="{% url 'factures' %}">Facture</a></li>
                         </ul>
                     </div>
-                    {% elif page_name == "Incidents" or page_name == "Reclamation" %}
+                    {% elif page_name == "Incidents" or page_name == "reclamations" %}
                         
                     {% endif %}
                     
-                    <div class="d-flex gap-3 justify-content-between align-items-center" {%if page_name == "Incidents" or page_name == "Reclamation" %} style="width: 100%;" {% endif %}> <!-- print + add button container-->
+                    <div class="d-flex gap-3 justify-content-between align-items-center" {%if page_name == "Incidents" or page_name == "reclamations" %} style="width: 100%;" {% endif %}> <!-- print + add button container-->
                         <button class="btn btn-secondary btn-md gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
                             <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
@@ -113,7 +113,7 @@
                             </svg>
                         Print</button>
                         
-                        <button id="addBtn" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#infoModal" id="plus-button">
+                        <button id="addBtn" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#infoModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                             </svg>

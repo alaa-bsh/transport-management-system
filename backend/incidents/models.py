@@ -3,7 +3,7 @@ from backend.manageExpedition.models import Tournée
 
 class Incident(models.Model):
     TYPE_INCIDENTS = [
-         ('retard', 'Retard'),
+        ('retard', 'Retard'),
         ('perte', 'Perte'),
         ('dommage', 'Dommage'),
         ('technique', 'Problème technique'),

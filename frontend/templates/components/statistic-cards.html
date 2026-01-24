@@ -1,12 +1,14 @@
 <div class="stat-card">
-  <p class="stat-title m-0">Nombre d'expéditions</p>
-
+  <p class="stat-title m-0">{{ title }}</p>
   <div class="stat-value mt-2">
-    <span class="percentage">15%</span>
-    <span class="arrow-d">↗</span>
+    {% if percentage %}
+      <span class="percentage">{{ percentage }}%</span>
+      {% if increase %}
+        <span class="arrow">↗</span>
+      {% else %}
+        <span class="arrow-d">↘</span>
+      {% endif %}
+    {% endif %}
   </div>
-
-  <p class="stat-description m-0">
-    d'augmentation dans le nombre total d'expéditions
-  </p>
+  <p class="stat-description m-0">{{ description }}</p>
 </div>

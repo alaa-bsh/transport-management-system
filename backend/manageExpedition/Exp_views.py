@@ -11,13 +11,13 @@ def expedition_info(request):
         "statut": "string",
         "numBureau": "number",
         "id_tournée": "number",
-        "montant_total": "number",
+        "service": "number",
     })
 
 
 def expedition_data(request):
 
-    table_fields = ["id_client",  "statut",  "numBureau", "id_tournée", "montant_total"]
+    table_fields = ["id_client" , "statut",  "numBureau", "id_tournée"]
     
     search_value = "" 
     exps = Expedition.objects.all().order_by("id") 
@@ -45,7 +45,7 @@ def expedition_data(request):
             "statut": e.statut,
             "numBureau": e.numBureau.numBureau,
             "id_tournée": e.id_tournée.id if e.id_tournée else None,
-            "montant_total": e.montant_total,
+         
         } for e in page_obj.object_list
     ]
 
@@ -71,7 +71,7 @@ def expedition_id_view(request, expedition_id):
             "date_exped": e.date_exped.strftime("%Y-%m-%d %H:%M"),
             "numBureau": e.numBureau.numBureau,
             "id_tournée": e.id_tournée.id if e.id_tournée else None,
-            "montant_total": e.montant_total,
+         
         }
         return JsonResponse(data)
     except Expedition.DoesNotExist:
@@ -105,12 +105,10 @@ def update_expedition(request, expedition_id):
             return JsonResponse({
                 "id": e.id,
                 "id_client": e.id_client.id,
-                "service": e.service.id if e.service else None,
                 "statut": e.statut,
-                "date_exped": e.date_exped.strftime("%Y-%m-%d %H:%M"),
                 "numBureau": e.numBureau.numBureau,
                 "id_tournée": e.id_tournée.id if e.id_tournée else None,
-                "montant_total": e.montant_total,
+           
             })
         except Expedition.DoesNotExist:
             return JsonResponse({"error": "Expedition not found"}, status=404)
@@ -137,12 +135,10 @@ def create_expedition(request):
         return JsonResponse({
             "id": e.id,
             "id_client": e.id_client.id,
-            "service": e.service.id if e.service else None,
             "statut": e.statut,
-            "date_exped": e.date_exped.strftime("%Y-%m-%d %H:%M"),
             "numBureau": e.numBureau.numBureau,
             "id_tournée": e.id_tournée.id if e.id_tournée else None,
-            "montant_total": e.montant_total,
+        
         })
 
     return JsonResponse({"error": "Invalid request"}, status=400)

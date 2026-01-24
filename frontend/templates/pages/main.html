@@ -25,7 +25,8 @@
     {% include "components/view-popup.html" %}
     {{ data_structure|json_script:"data-structure" }}
     {{ headers|json_script:"headers" }}
-
+    
+<script src="{% static 'js/yourfile.js' %}?v={{ APP_VERSION|default:'1.0.0' }}"></script>
 <script type="module" src="{% static 'js/main/main.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

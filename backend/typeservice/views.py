@@ -7,7 +7,14 @@ from django.core.paginator import Paginator
 
 def typeservice_info(request):
     return JsonResponse({
-        "typeService": "string",
+        "typeService": {
+            "type": "choice",
+            "choices": [
+                {"value": "standard", "label": "Standard"},
+                {"value": "express", "label": "Express"},
+                {"value": "urgent", "label": "Urgent"}
+            ]
+        },
         "Delai": "string",
     })
 

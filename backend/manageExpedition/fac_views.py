@@ -9,8 +9,6 @@ def facture_info(request):
     return JsonResponse({
         "id_client": "number",
         "date_fact": "YYYY-MM-DD",
-        "montant_HT": "number",
-        "montant_TTC": "number",
     })
 
 
@@ -79,7 +77,7 @@ def update_facture(request, facture_id):
 
         try:
             f = Facture.objects.get(id=facture_id)
-            # Only update client
+
             from backend.clients.models import Client
             if "id_client" in data:
                 f.id_client = Client.objects.get(id=data["id_client"])
@@ -111,8 +109,6 @@ def create_facture(request):
             "id": f.id,
             "id_client": f.id_client.id,
             "date_fact": f.date_fact.strftime("%Y-%m-%d"),
-            "montant_HT": f.montant_HT,
-            "montant_TTC": f.montant_TTC,
         })
 
     return JsonResponse({"error": "Invalid request"}, status=400)

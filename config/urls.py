@@ -32,6 +32,6 @@ urlpatterns = [
     path("Factures/", include('backend.manageExpedition.Fac_urls')),
     # path("paiement/", views.facturation_view, name="paiement"),
     path("Incidents/", include('backend.incidents.urls')),
-    # path("reclamation/", include('backend.reclamations.urls')),
+    path("reclamations/", include('backend.reclamations.urls')),
     path("dashboard/", include('backend.dashboard.urls')),
 ]

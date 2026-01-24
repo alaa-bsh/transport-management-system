@@ -51,15 +51,15 @@ class Expedition(models.Model) :
     id_tournée = models.ForeignKey(Tournée, on_delete=models.SET_NULL,null=True)
     @property
     def montant_total(self):
-        tarifBase = self.numBureau.tarifBase
-        poidsTot = 0
-        volumeTot = 0
-        for colis in self.id_colis.all():
-            poidsTot  = poidsTot + colis.poids
-            volumeTot = volumeTot + colis.volume
-        prixPoidsTot = poidsTot * self.tarification.tarifPoids
-        prixVolTot= volumeTot * self.tarification.tarifVol
-        return tarifBase + prixPoidsTot + prixVolTot
+       tarifBase = self.numBureau.tarifBase
+       poidsTot = 0
+       volumeTot = 0
+       for colis in self.id_colis.all():
+           poidsTot  = poidsTot + colis.poids
+           volumeTot = volumeTot + colis.volume
+       prixPoidsTot = poidsTot * self.tarification.tarifPoids
+       prixVolTot= volumeTot * self.tarification.tarifVol
+       return tarifBase + prixPoidsTot + prixVolTot
 
     def __str__(self):
         return f"#{self.id_Exp}"
