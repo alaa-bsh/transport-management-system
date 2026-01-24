@@ -25,7 +25,7 @@ graph LR
     A --> F[package-lock.json]
     A --> G[README.md]
     A --> H[.gitignore]
-    A --> I[backend]
+    A --> I[backend--contains apps]
     A --> J[config]
     A --> K[frontend]
     A --> L[node_modules]
@@ -137,28 +137,38 @@ graph LR
 ### User Flow Diagram
 ```mermaid
 flowchart LR
-    Home["Home Page"]
-    Home -->|Navigate| News["Today's News"]
-    Home -->|Navigate| Features["Favorite Features"]
-    Home -->|Navigate| Sections["Sections / Categories"]
-    Home -->|Access| TablesData["Tables & Data"]
-    Home -->|Access| Expeditions["Gestion des Expéditions"]
-    Home -->|Access| Tournees["Gestion des Tournées"]
-    Home -->|Access| Facturation["Facturation & Paiement"]
-    Home -->|Access| Incidents["Gestion des Incidents"]
-    Home -->|Access| Reclamations["Gestion des Réclamations"]
-    Home -->|Access| Analyse["Analyse Commerciale & Opérationnelle"]
-    TablesData --> TableOps["View / Add / Modify / Delete"]
-    Expeditions --> ExpeditionOps["Create / View / Modify / Add to Tournee"]
-    ExpeditionOps -->|Generates| ExpeditionID["ID & Status"]
-    ExpeditionOps -->|Calculates| ExpeditionAmount["Amount"]
-    Tournees --> TourneeOps["View / Modify / Delete / Search"]
-    Facturation --> FactureOps["Add / Modify / View / Delete Factures"]
-    Facturation --> PaiementOps["Add / Modify / View / Delete Payments"]
-    Incidents --> IncidentOps["Add / Modify / View / Delete"]
-    Reclamations --> ReclamationOps["Add / Modify / View / Delete"]
-    Analyse --> Commercial["Top Clients, Popular Destinations, Revenue Trends"]
-    Analyse --> Operational["Delivery Success Rate, Top Drivers, Active Periods, Incident Zones"]
+    Navigation["Navigation"]
+    Navigation -->|Navigate| Features["Favorite"]
+    Navigation -->|Navigate| TablesData["Tables & Data"]
+    Navigation -->|Navigate| Expeditions["Gestion des Expéditions"]
+    Navigation -->|Navigate| Tournees["Gestion des Tournées"]
+    Navigation -->|Navigate| Facturation["Facturation & Paiement"]
+    Navigation -->|Navigate| Incidents["Gestion des Incidents"]
+    Navigation -->|Navigate| Reclamations["Gestion des Réclamations"]
+    Navigation -->|Navigate| Analyse["Dashboard"]
+    TablesData --> Client[Table client]
+    TablesData --> Chauffeurs[Table Chauffeurs]
+    TablesData --> Vehicule[Table Vehicule]
+    TablesData --> Destination[Table Destination]
+    TablesData --> Typeservice[Table Typeservice]
+    TablesData --> Tarification[Table Tarification]
+    Client --> Ops
+    Chauffeurs --> Ops
+    Vehicule --> Ops
+    Destination --> Ops
+    Typeservice --> Ops
+    Tarification --> Ops
+    Expeditions --> expedition[Table expedition]
+    Expeditions --> Tournee[Table Tournee]
+    Tournee --> Ops["Create / View / Modify / Delete / Search"]
+    expedition --> Ops["Create / View / Modify / Delete / Search"]
+    Facturation --> facture[Table facture]
+    Facturation --> paiement[Table paiement]
+    facture --> Ops
+    paiement --> Ops
+    Incidents --> Ops
+    Reclamations --> Ops
+    Navigation --> |Navigate|Dashboard[Dashboard]
 ```
 
 
@@ -193,7 +203,7 @@ python manage.py runserver
 * **Add New Record:** click “Add” buttons, fill in forms, submit.
 * **Edit Record:** modify existing records via edit forms.
 * **Delete Record:** remove records (with confirmation).
-* **Export / Print:** download or print table data (if implemented).
+* **Print:** print table data (if implemented).
 
 
 
@@ -224,15 +234,4 @@ python manage.py migrate
 python manage.py runserver
 ```
 5. Access the project at : http://127.0.0.1:8000
-## Team Members
-
-- **Aissat Lyna**  
-  Frontend & UI/UX design, interface implementation, backend linking
-
-- **Boussaha Sara Alaa**  
-  Data models, business logic, backend development, dashboard logic
-
-- **Hachi Kawthar Khadidja**  
-  Backend modules (Expeditions, Invoicing, Tours, Destinations, Incidents),
-  data modeling (MCD, MLD), use cases, and documentation
 
